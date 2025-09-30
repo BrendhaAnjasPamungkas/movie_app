@@ -12,17 +12,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(HomeController(
-    ));
+    final controller = Get.put(HomeController());
 
-return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         title: const Text('MovieX'),
         backgroundColor: Colors.black87,
-        actions: [ // <-- TAMBAHKAN BLOK INI
+        actions: [
+          // <-- TAMBAHKAN BLOK INI
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: controller.showSignOutConfirmationDialog, // <-- GANTI INI
+            onPressed:
+                controller.showSignOutConfirmationDialog, // <-- GANTI INI
             tooltip: 'Logout',
           ),
         ],
@@ -40,6 +41,10 @@ return Scaffold(
                 _buildMovieSection('Now Playing', controller.nowPlayingMovies),
                 const SizedBox(height: 24),
                 _buildMovieSection('Popular', controller.popularMovies),
+                const SizedBox(height: 24),
+                _buildMovieSection('Top Rated', controller.topRatedMovies),
+                const SizedBox(height: 24),
+                 _buildMovieSection('Upcoming', controller.upcomingMovies),
               ],
             ),
           );
@@ -67,7 +72,7 @@ return Scaffold(
             scrollDirection: Axis.horizontal,
             itemCount: movies.length,
             // Tambahkan padding kiri untuk item pertama
-            padding: const EdgeInsets.only(left: 8.0), 
+            padding: const EdgeInsets.only(left: 8.0),
             itemBuilder: (context, index) {
               final movie = movies[index];
               return MovieCard(movie: movie);

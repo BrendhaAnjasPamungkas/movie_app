@@ -5,11 +5,12 @@ import '/core/widgets/main_widget.dart';
 import '/injection.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+   RegisterPage({super.key});
+
+    final controller = Get.put(RegisterController(sl()));
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(RegisterController(sl()));
 
     return Scaffold(
       appBar: AppBar(title: W.text(data: 'Register To MovieX')),

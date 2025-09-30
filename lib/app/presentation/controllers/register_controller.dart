@@ -30,7 +30,7 @@ class RegisterController extends GetxController {
           errorMessage(failure.message);
         },
         (user) {
-          Get.offAll(() => const LoginPage());
+          Get.offAll(() =>  LoginPage());
         },
       );
       isLoading(false);

@@ -14,41 +14,27 @@ class MovieRepositoryImpl implements MovieRepository {
   MovieRepositoryImpl({required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<Movie>>> getNowPlayingMovies() async {
+  Future<Either<Failure, List<Movie>>> getMovies({
+    required String jenisfilm,
+  }) async {
     try {
-      final List<MovieModel> movieModels = await remoteDataSource.getNowPlayingMovies();
+      final List<MovieModel> movieModels = await remoteDataSource.getMovies(
+        jenisfilm: jenisfilm,
+      );
       // INI BAGIAN YANG DIPERBAIKI:
       // Kita ubah List<MovieModel> menjadi List<Movie>
-      final List<Movie> movies = movieModels.map((model) => Movie(
-        id: model.id,
-        title: model.title,
-        overview: model.overview,
-        posterPath: model.posterPath,
-      )).toList();
-      
-      return Right(movies);
-
-    } on ServerException {
-      return const Left(ServerFailure('Gagal mengambil data dari server'));
-    } on SocketException {
-      return const Left(ConnectionFailure('Gagal terhubung ke internet'));
-    }
-  }
-
-  @override
-  Future<Either<Failure, List<Movie>>> getPopularMovies() async {
-    try {
-      final List<MovieModel> movieModels = await remoteDataSource.getPopularMovies();
-      // INI JUGA DIPERBAIKI:
-      final List<Movie> movies = movieModels.map((model) => Movie(
-        id: model.id,
-        title: model.title,
-        overview: model.overview,
-        posterPath: model.posterPath,
-      )).toList();
+      final List<Movie> movies = movieModels
+          .map(
+            (model) => Movie(
+              id: model.id,
+              title: model.title,
+              overview: model.overview,
+              posterPath: model.posterPath,
+            ),
+          )
+          .toList();
 
       return Right(movies);
-
     } on ServerException {
       return const Left(ServerFailure('Gagal mengambil data dari server'));
     } on SocketException {

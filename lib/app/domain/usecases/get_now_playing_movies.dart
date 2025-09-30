@@ -5,12 +5,12 @@ import '../../../core/error/failure.dart';
 import '../entities/movie.dart';
 import '../repositories/movie_repository.dart';
 
-class GetNowPlayingMovies {
+class GetMoviesusecase {
   final MovieRepository repository;
 
-  GetNowPlayingMovies(this.repository);
+  GetMoviesusecase(this.repository);
 
-  Future<Either<Failure, List<Movie>>> execute() {
-    return repository.getNowPlayingMovies();
+  Future<Either<Failure, List<Movie>>> getMovies({required String jenisfilm}) {
+    return repository.getMovies(jenisfilm: jenisfilm);
   }
 }

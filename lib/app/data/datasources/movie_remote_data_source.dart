@@ -13,10 +13,9 @@ class MovieRemoteDataSource {
   MovieRemoteDataSource({required this.client});
 
   // Fungsi untuk mengambil film Now Playing
-  Future<List<MovieModel>> getNowPlayingMovies() async {
-    final http.Response response = await client.get(
-      Uri.parse(ApiConstants.nowPlayingMoviesPath),
-    );
+  Future<List<MovieModel>> getMovies({required String jenisfilm}) async {
+    String url = '${ApiConstants.baseUrl}/$jenisfilm?${ApiConstants.apiKey}';
+    final http.Response response = await client.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       // Jika server merespons dengan sukses (kode 200)
@@ -29,22 +28,4 @@ class MovieRemoteDataSource {
       throw ServerException(e.toString());
     }
   }
-
-  // Fungsi untuk mengambil film Populer
-  Future<List<MovieModel>> getPopularMovies() async {
-    final response = await client.get(
-      Uri.parse(ApiConstants.popularMoviesPath),
-    );
-
-    if (response.statusCode == 200) {
-      final responseBody = json.decode(response.body);
-      final List<dynamic> results = responseBody['results'];
-      return results.map((json) => MovieModel.fromJson(json)).toList();
-    } else {
-      throw ServerException(e.toString());
-    }
-  }
-
-  
-
 }

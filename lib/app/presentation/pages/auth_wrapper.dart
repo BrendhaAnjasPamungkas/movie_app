@@ -22,7 +22,7 @@ class SplashPage extends StatelessWidget {
         }
 
         // Jika user belum login
-        return const LoginPage();
+        return LoginPage();
       },
     );
   }

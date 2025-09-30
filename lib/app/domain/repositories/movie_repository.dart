@@ -7,6 +7,5 @@ import '../entities/movie.dart'; // Kita akan buat file ini di langkah berikutny
 // Ini adalah kontrak atau blueprint.
 // Setiap repository film HARUS memiliki fungsi-fungsi ini.
 abstract class MovieRepository {
-  Future<Either<Failure, List<Movie>>> getNowPlayingMovies();
-  Future<Either<Failure, List<Movie>>> getPopularMovies();
+  Future<Either<Failure, List<Movie>>> getMovies({required String jenisfilm});
 }
