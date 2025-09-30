@@ -2,10 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_app/core/widgets/main_widget.dart';
 import '/app/domain/entities/movie.dart';
 import '/app/presentation/controllers/home_controller.dart';
 import '/app/presentation/widgets/movie_card.dart';
-import 'package:movie_app/injection.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -13,14 +13,19 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(HomeController(
-      getNowPlayingMovies: sl(),
-      getPopularMovies: sl(),
     ));
 
-    return Scaffold(
+return Scaffold(
       appBar: AppBar(
         title: const Text('MovieX'),
         backgroundColor: Colors.black87,
+        actions: [ // <-- TAMBAHKAN BLOK INI
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: controller.showSignOutConfirmationDialog, // <-- GANTI INI
+            tooltip: 'Logout',
+          ),
+        ],
       ),
       body: Obx(() {
         if (controller.isLoading.value) {
@@ -50,10 +55,11 @@ class HomePage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16.0, bottom: 12.0),
-          child: Text(
-            title,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
+          child: W.text(data: title, fontSize: 20, fontWeight: FontWeight.bold),
+          // child: Text(
+          //   title,
+          //   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          // ),
         ),
         SizedBox(
           height: 240, // Tinggi area list horizontal

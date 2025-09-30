@@ -1,13 +1,18 @@
 // lib/main.dart
 
 import 'package:flutter/material.dart';
+import 'package:movie_app/app/presentation/pages/auth_wrapper.dart';
 import 'injection.dart' as di; // import file injection.dart dengan alias 'di'
-import 'app/presentation/pages/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'firebase_options.dart';
 
 void main() async { // Ubah menjadi async
   // Pastikan semua binding framework siap sebelum menjalankan kode lain
   WidgetsFlutterBinding.ensureInitialized(); 
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Panggil fungsi init() kita untuk mendaftarkan semua dependency
   di.init(); 
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       debugShowCheckedModeBanner: false, 
-      home: const HomePage(), 
+      home: const SplashPage(), 
     );
   }
 }
