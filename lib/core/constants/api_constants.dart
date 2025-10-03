@@ -10,4 +10,7 @@ class ApiConstants {
   // Base URL untuk gambar poster film
   // Gunakan w500 untuk kualitas gambar yang baik
   static const String baseImageUrl = 'https://image.tmdb.org/t/p/w500';
+  
+  static String searchMoviesPath(String query) => 
+      'https://api.themoviedb.org/3/search/movie?${ApiConstants.apiKey}&query=$query';
 }

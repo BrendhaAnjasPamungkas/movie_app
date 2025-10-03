@@ -41,4 +41,28 @@ class MovieRepositoryImpl implements MovieRepository {
       return const Left(ConnectionFailure('Gagal terhubung ke internet'));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Movie>>> searchMovies(String query) async {
+    try {
+      final List<MovieModel> movieModels = await remoteDataSource.searchMovies(
+        query,
+      );
+      final List<Movie> movies = movieModels
+          .map(
+            (model) => Movie(
+              id: model.id,
+              title: model.title,
+              overview: model.overview,
+              posterPath: model.posterPath,
+            ),
+          )
+          .toList();
+      return Right(movies);
+    } on ServerException {
+      return const Left(ServerFailure('Gagal mengambil data dari server'));
+    } on SocketException {
+      return const Left(ConnectionFailure('Gagal terhubung ke internet'));
+    }
+  }
 }

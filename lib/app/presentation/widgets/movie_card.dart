@@ -3,6 +3,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shimmer/shimmer.dart';
 import '/app/domain/entities/movie.dart';
 import '/app/presentation/pages/detail_movie_page.dart';
 import '/core/constants/api_constants.dart';
@@ -16,27 +17,34 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // INI STRUKTUR YANG BENAR:
     // 1. GestureDetector (Pembungkus agar bisa di-klik)
-    return GestureDetector(
-      onTap: () {
-        Get.to(() => const DetailMoviePage(), arguments: movie);
-      },
-      // 2. Container (Wadah utama yang punya ukuran dan margin)
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        width: 130,
-        // 3. Column (Isi dari kartu film)
+    return Container(
+      width: 130,
+      child: GestureDetector(
+        onTap: () {
+          Get.to(() => const DetailMoviePage(), arguments: movie);
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: CachedNetworkImage(
-                imageUrl: '${ApiConstants.baseImageUrl}${movie.posterPath}',
-                placeholder: (context, url) =>
-                    const Center(child: CircularProgressIndicator()),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                fit: BoxFit.cover,
-                height: 180,
+            Align(
+              alignment: AlignmentGeometry.centerLeft,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: CachedNetworkImage(
+                  imageUrl: '${ApiConstants.baseImageUrl}${movie.posterPath}',
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    child: Container(width: 130, color: Colors.black),
+                    baseColor: Colors.white,
+                    highlightColor: Colors.grey,
+                  ),
+                  errorWidget: (context, url, error) => Container(
+                    width: 130,
+                    color: Colors.grey,
+                    child: const Icon(Icons.error),
+                  ),
+                  fit: BoxFit.cover,
+                  height: 180,
+                ),
               ),
             ),
             W.gap(height: 8),

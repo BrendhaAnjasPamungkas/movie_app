@@ -1,11 +1,14 @@
 // lib/app/presentation/pages/home_page.dart
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_app/core/widgets/main_widget.dart';
 import '/app/domain/entities/movie.dart';
 import '/app/presentation/controllers/home_controller.dart';
 import '/app/presentation/widgets/movie_card.dart';
+import '/app/presentation/pages/search_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,9 +19,14 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('MovieX'),
+        title: W.text(data: 'MovieX'),
         backgroundColor: Colors.black87,
         actions: [
+          IconButton(
+            // <-- TOMBOL SEARCH BARU
+            icon: const Icon(Icons.search),
+            onPressed: () => Get.to(() => const SearchPage()),
+          ),
           // <-- TAMBAHKAN BLOK INI
           IconButton(
             icon: const Icon(Icons.logout),
@@ -39,17 +47,72 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _buildMovieSection('Now Playing', controller.nowPlayingMovies),
-                const SizedBox(height: 24),
+                const SizedBox(height: 9),
                 _buildMovieSection('Popular', controller.popularMovies),
-                const SizedBox(height: 24),
+                const SizedBox(height: 9),
                 _buildMovieSection('Top Rated', controller.topRatedMovies),
-                const SizedBox(height: 24),
-                 _buildMovieSection('Upcoming', controller.upcomingMovies),
+                const SizedBox(height: 9),
+                _buildMovieSection('Upcoming', controller.upcomingMovies),
               ],
             ),
           );
         }
       }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          void show(dynamic value) {
+            log(value.toString());
+          }
+
+          List<dynamic> data = [
+            {
+              "id": 1,
+              "nama": "Andi",
+              "hobi": ["Membaca", "Coding", "Olahraga"],
+              "alamat": {
+                "kota": "Jakarta",
+                "kodePos": 12345,
+                "riwayat": [
+                  {"tahun": 2020, "kota": "Bandung"},
+                  {"tahun": 2021, "kota": "Surabaya"},
+                ],
+              },
+            },
+            {
+              "id": 2,
+              "nama": "Budi",
+              "hobi": ["Musik", "Fotografi"],
+              "alamat": {
+                "kota": "Medan",
+                "kodePos": 67890,
+                "riwayat": [
+                  {"tahun": 2019, "kota": "Makassar"},
+                  {
+                    "tahun": 2022,
+                    "kota": "Yogyakarta",
+                    "detail": ["Kos", "Kontrak Rumah", "Apartemen"],
+                  },
+                ],
+              },
+            },
+            [
+              {
+                "kategori": "Buah",
+                "items": ["Apel", "Jeruk", "Pisang"],
+              },
+              {
+                "kategori": "Minuman",
+                "items": [
+                  {"nama": "Kopi", "tipe": "Panas"},
+                  {"nama": "Teh", "tipe": "Dingin"},
+                ],
+              },
+            ],
+          ];
+
+          show(data[1]["alamat"]['riwayat'][1]['detail'][2]);
+        },
+      ),
     );
   }
 
@@ -60,7 +123,7 @@ class HomePage extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 16.0, bottom: 12.0),
-          child: W.text(data: title, fontSize: 20, fontWeight: FontWeight.bold),
+          child: W.text(data: title, fontSize: 17, fontWeight: FontWeight.bold),
           // child: Text(
           //   title,
           //   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),

@@ -28,4 +28,15 @@ class MovieRemoteDataSource {
       throw ServerException(e.toString());
     }
   }
+  Future<List<MovieModel>> searchMovies(String query) async {
+    final response = await client.get(Uri.parse(ApiConstants.searchMoviesPath(query)));
+
+    if (response.statusCode == 200) {
+      final responseBody = json.decode(response.body);
+      final List<dynamic> results = responseBody['results'];
+      return results.map((json) => MovieModel.fromJson(json)).toList();
+    } else {
+      throw ServerException('Failed to search movies');
+    }
+  }
 }

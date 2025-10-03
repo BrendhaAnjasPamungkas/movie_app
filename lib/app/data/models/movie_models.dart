@@ -18,11 +18,11 @@ class MovieModel extends Equatable {
   // Factory constructor ini bertugas mengubah data JSON (berbentuk Map)
   // menjadi objek MovieModel.
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
-        id: json['id'],
-        title: json['title'],
-        overview: json['overview'],
-        posterPath: json['poster_path'],
-      );
+    id: json['id'],
+    title: json['title'],
+    overview: json['overview'],
+    posterPath: json['poster_path'] ?? '',
+  );
 
   // 'props' dari package Equatable membantu kita untuk membandingkan
   // dua objek MovieModel berdasarkan isinya, bukan lokasi memorinya.

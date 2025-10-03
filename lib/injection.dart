@@ -13,6 +13,7 @@ import '/app/domain/repositories/auth_repository.dart';
 import '/app/domain/usecases/register_user.dart';
 import '/app/domain/usecases/login_user.dart';
 import '/app/domain/usecases/sign_out_user.dart';
+import 'app/domain/usecases/search_movies.dart';
 
 // Membuat instance dari GetIt sebagai Service Locator kita.
 // Kita beri nama 'sl' (service locator).
@@ -41,6 +42,7 @@ void init() {
   // Artinya, setiap kali kita panggil sl<GetPopularMovies>(),P
   // instance baru akan dibuat.
   sl.registerFactory(() => GetMoviesusecase(sl()));
+  sl.registerFactory(() => SearchMovies(sl())); 
 
   // -- Repository --
   // Repository kita daftarkan sebagai lazy singleton.
